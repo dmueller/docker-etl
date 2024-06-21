@@ -173,7 +173,7 @@ SAMPLE_BREAKAGE_BUGS = [
     },
 ]
 
-SAMPLE_CORE_AS_KB_BUGS = [
+SAMPLE_CORE_AS_KB_BUGS = {item["id"]: item for item in [
     {
         "whiteboard": "",
         "see_also": ["https://bugzilla.mozilla.org/show_bug.cgi?id=1740472"],
@@ -237,7 +237,7 @@ SAMPLE_CORE_AS_KB_BUGS = [
         "id": 444444,
         "assigned_to": "nobody@mozilla.org",
     },
-]
+]}
 
 SAMPLE_HISTORY = [
     {
@@ -1326,12 +1326,12 @@ def test_values_with_colon():
     assert parse_string_to_json(input_str) == expected
 
 
-def test_filter_core_as_kb_bugs(bz):
-    core_as_kb_bugs = bz.filter_core_as_kb_bugs(
+def test_filter_kb_other(bz):
+    core_as_kb_bugs = bz.filter_kb_other(
         SAMPLE_CORE_AS_KB_BUGS, {1835339}, {1896383, 222222}
     )
 
-    assert core_as_kb_bugs[0] == [
+    assert core_as_kb_bugs == {item["id"]: item for item in [
         {
             "assigned_to": "nobody@mozilla.org",
             "whiteboard": "",
@@ -1378,10 +1378,7 @@ def test_filter_core_as_kb_bugs(bz):
             "component": "JavaScript Engine",
             "id": 444444,
         },
-    ]
-
-    assert core_as_kb_bugs[1] == {999999}
-
+    ]}
 
 def test_convert_bug_data(bz):
     expected_data = [
