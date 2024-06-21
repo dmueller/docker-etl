@@ -295,7 +295,7 @@ class BugzillaToBigQuery:
             fetched_bugs[category] = self.fetch_bugs(filter_config)
 
         site_reports = fetched_bugs["site_reports_wc"]
-        site_reports.update(fetched_bugs["site_report_other"])
+        site_reports.update(fetched_bugs["site_reports_other"])
 
         kb_bugs = fetched_bugs["knowledge_base_wc"]
         kb_bugs.update(
